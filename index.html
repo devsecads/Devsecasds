@@ -8,7 +8,7 @@
     <meta name="description" content="Welcome to Devsecads, your expert partner for top-tier digital marketing. We specialize in Facebook & Google Ads, Shopify, Printful, Etsy store setups, and more to scale your business.">
     
     <!-- Favicon: A modern icon for your site -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w.org/2000/svg%22 viewBox=%220 0 100 100%22><path fill=%22%234299e1%22 d=%22M50 0 L100 25 L100 75 L50 100 L0 75 L0 25 Z%22></path><text x=%2250%22 y=%2260%22 font-size=%2240%22 fill=%22white%22 text-anchor=%22middle%22 font-family=%22Inter, sans-serif%22 font-weight=%22bold%22>DS</text></svg>">
+    <link rel="icon" href="https://i.ibb.co/XZrQ8WDY/devsecads-logo.png">
 
     <!-- Schema.org Structured Data (Helps Google understand your site for Sitelinks & Rich Results) -->
     <script type="application/ld+json">
@@ -17,7 +17,7 @@
       "@type": "Organization",
       "name": "Devsecads",
       "url": "https://devsecads.site",
-      "logo": "https://devsecads.site/logo.png",
+      "logo": "https://i.ibb.co/XZrQ8WDY/devsecads-logo.png",
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer service",
@@ -37,11 +37,13 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0a192f;
+            /* New dark purple background for the entire site */
+            background-color: #2a2135;
             color: #ccd6f6;
         }
         .glass-effect {
-            background: rgba(23, 49, 92, 0.4);
+            /* Updated glass effect to match the new background */
+            background: rgba(56, 44, 74, 0.5);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -51,7 +53,7 @@
         }
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(66, 153, 225, 0.25);
+            box-shadow: 0 10px 20px rgba(189, 171, 218, 0.25);
         }
         .service-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -72,7 +74,7 @@
         }
         .dot {
             position: absolute;
-            background: rgba(100, 181, 246, 0.1);
+            background: rgba(189, 171, 218, 0.1);
             border-radius: 50%;
             animation: move 15s infinite linear;
         }
@@ -94,15 +96,15 @@
             <nav class="flex items-center justify-between">
                 <!-- LOGO: Replace 'src' with the path to your PNG logo file. Recommended size: 150x40 pixels -->
                 <a href="#">
-                    <img src="https://placehold.co/150x40/0a192f/FFFFFF?text=Devsecads&font=inter" alt="Devsecads Logo" class="h-10">
+                    <img src="https://i.ibb.co/XZrQ8WDY/devsecads-logo.png" alt="Devsecads Logo" class="h-16">
                 </a>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="text-gray-300 hover:text-blue-400 transition">Home</a>
-                    <a href="#services" class="text-gray-300 hover:text-blue-400 transition">Services</a>
-                    <a href="#about" class="text-gray-300 hover:text-blue-400 transition">About</a>
-                    <a href="#contact" class="text-gray-300 hover:text-blue-400 transition">Contact</a>
+                    <a href="#home" class="text-gray-300 hover:text-[#BDABDA] transition">Home</a>
+                    <a href="#services" class="text-gray-300 hover:text-[#BDABDA] transition">Services</a>
+                    <a href="#about" class="text-gray-300 hover:text-[#BDABDA] transition">About</a>
+                    <a href="#contact" class="text-gray-300 hover:text-[#BDABDA] transition">Contact</a>
                 </div>
-                <a href="#contact" class="hidden md:block bg-blue-500 hover:bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg cta-button">Get a Quote</a>
+                <a href="#contact" class="hidden md:block bg-[#BDABDA] hover:bg-[#a996c4] text-gray-900 font-semibold px-5 py-2 rounded-lg cta-button">Get a Quote</a>
                 <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
                     <svg id="menu-open-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                     <svg id="menu-close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -110,11 +112,11 @@
             </nav>
             <!-- Mobile Menu -->
             <div id="mobile-menu" class="hidden md:hidden mt-4 glass-effect rounded-lg p-2">
-                <a href="#home" class="block py-2 px-4 text-sm text-gray-300 hover:bg-blue-900 rounded">Home</a>
-                <a href="#services" class="block py-2 px-4 text-sm text-gray-300 hover:bg-blue-900 rounded">Services</a>
-                <a href="#about" class="block py-2 px-4 text-sm text-gray-300 hover:bg-blue-900 rounded">About</a>
-                <a href="#contact" class="block py-2 px-4 text-sm text-gray-300 hover:bg-blue-900 rounded">Contact</a>
-                <a href="#contact" class="block mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold text-center px-5 py-2 rounded-lg cta-button">Get a Quote</a>
+                <a href="#home" class="block py-2 px-4 text-sm text-gray-300 hover:bg-purple-900/50 rounded">Home</a>
+                <a href="#services" class="block py-2 px-4 text-sm text-gray-300 hover:bg-purple-900/50 rounded">Services</a>
+                <a href="#about" class="block py-2 px-4 text-sm text-gray-300 hover:bg-purple-900/50 rounded">About</a>
+                <a href="#contact" class="block py-2 px-4 text-sm text-gray-300 hover:bg-purple-900/50 rounded">Contact</a>
+                <a href="#contact" class="block mt-2 bg-[#BDABDA] hover:bg-[#a996c4] text-gray-900 font-semibold text-center px-5 py-2 rounded-lg cta-button">Get a Quote</a>
             </div>
         </div>
     </header>
@@ -124,13 +126,13 @@
         <section id="home" class="min-h-screen flex items-center pt-24 md:pt-0">
             <div class="container mx-auto px-6 text-center">
                 <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4 animate-fade-in-up">
-                    Scale Your Business with <br><span class="text-blue-400">Devsecads Marketing</span>
+                    Scale Your Business with <br><span class="text-[#BDABDA]">Devsecads Marketing</span>
                 </h1>
                 <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8 animate-fade-in-up" style="animation-delay: 0.3s;">
                     From targeted ad campaigns that convert to seamless e-commerce store setups, Devsecads provides the digital firepower you need to dominate your market.
                 </p>
                 <div class="animate-fade-in-up" style="animation-delay: 0.6s;">
-                    <a href="#services" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full text-lg cta-button inline-block">Explore Our Services</a>
+                    <a href="#services" class="bg-[#BDABDA] hover:bg-[#a996c4] text-gray-900 font-bold py-3 px-8 rounded-full text-lg cta-button inline-block">Explore Our Services</a>
                 </div>
             </div>
         </section>
@@ -145,7 +147,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Paid Ads -->
                     <div class="service-card glass-effect p-8 rounded-xl reveal">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-900 text-blue-300 mb-6">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                             <!-- Meta (Facebook) Icon -->
                             <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M22.08 12.539c0-5.323-4.212-9.65-9.42-9.65-5.212 0-9.423 4.327-9.423 9.65 0 4.77 3.424 8.761 7.913 9.539v-6.73H8.381V12.54h2.769V10.1c0-2.72 1.612-4.222 4.1-4.222 1.18 0 2.451.211 2.451.211v2.32h-1.19c-1.34 0-1.751.82-1.751 1.68v2.051h2.6l-.41 2.809h-2.19V22.08c4.49-.778 7.913-4.769 7.913-9.541z"/>
@@ -157,7 +159,7 @@
 
                     <!-- Shopify Setup -->
                     <div class="service-card glass-effect p-8 rounded-xl reveal" data-reveal-delay="100">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-900 text-blue-300 mb-6">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                             <!-- Shopify Icon -->
                             <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M20.278 14.156c-.228 0-.44.02-.63.05a4.27 4.27 0 0 1-2.91-2.91c.03-.19.05-.4.05-.63 0-1.87-.93-3.52-2.36-4.48a4.91 4.91 0 0 0-3.32-.23c-1.85.52-3.15 2.14-3.33 4.02-.03.26-.03.52-.02.78.18 2.22 1.6 4.1 3.65 4.72.26.08.53.12.8.12.5 0 .98-.12 1.42-.34.25-.13.48-.3.7-.48a4.21 4.21 0 0 1 2.9 2.91c.18.15.35.32.53.51.24.25.53.47.85.65.1.06.2.1.3.15a3.78 3.78 0 0 0 3.32-3.32c0-.26-.03-.52-.08-.77a4.6 4.6 0 0 0-4.39-2.35zM12 4.012c.55 0 1.07.1 1.55.28a3.15 3.15 0 0 1-1.55 6.03 3.15 3.15 0 0 1-1.55-6.03c.48-.18.99-.28 1.55-.28z"/>
@@ -169,7 +171,7 @@
 
                     <!-- Drop Shipping / POD -->
                     <div class="service-card glass-effect p-8 rounded-xl reveal" data-reveal-delay="200">
-                         <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-900 text-blue-300 mb-6">
+                         <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                             <!-- Printful Icon -->
                             <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M19.5 2h-15C3.12 2 2 3.12 2 4.5v15C2 20.88 3.12 22 4.5 22h15c1.38 0 2.5-1.12 2.5-2.5v-15C22 3.12 20.88 2 19.5 2zM9.91 17.09H6.42V7.41h3.49v9.68zm7.12-4.99c0 2.24-1.39 3.5-3.59 3.5s-3.59-1.26-3.59-3.5V7.41h3.59c2.2 0 3.59 1.25 3.59 3.49v1.2z"/>
@@ -181,7 +183,7 @@
 
                     <!-- GearLaunch Setup -->
                     <div class="service-card glass-effect p-8 rounded-xl reveal" data-reveal-delay="0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-900 text-blue-300 mb-6">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                            <!-- Gear Icon -->
                            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="3"></circle>
@@ -194,7 +196,7 @@
 
                     <!-- Base Platform Setups -->
                     <div class="service-card glass-effect p-8 rounded-xl reveal" data-reveal-delay="100">
-                         <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-900 text-blue-300 mb-6">
+                         <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4M4 7l8 4.5M20 7l-8 4.5m0 0V21"></path></svg>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-3">ShopBase, PlusBase, PrintBase</h3>
@@ -203,7 +205,7 @@
 
                     <!-- Marketplace Integration -->
                     <div class="service-card glass-effect p-8 rounded-xl reveal" data-reveal-delay="200">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-900 text-blue-300 mb-6">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                            <!-- Etsy Icon -->
                             <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M11.05 6.42h5.71v2.19h-5.71V6.42zm0 4.38h5.71v2.19h-5.71v-2.19zm-5.63 2.6c1.23 0 2.23.99 2.23 2.22s-1 2.22-2.23 2.22-2.23-.99-2.23-2.22.99-2.22 2.23-2.22zm10.74 3.42c.16 0 .3.14.3.3v1.38c0 .16-.14.3-.3.3H4.88c-.16 0-.3-.14-.3-.3V8.6c0-.16.14-.3.3-.3h1.33c.16 0 .3.14.3.3v6.32h9.61v-1.1c0-.16.14-.3.3-.3zm2.73-10.2H4.88c-1.25 0-2.26 1.01-2.26 2.26v10.28c0 1.25 1.01 2.26 2.26 2.26h14.24c1.25 0 2.26-1.01 2.26-2.26V8.88c0-1.25-1.01-2.26-2.26-2.26z"/>
@@ -215,7 +217,7 @@
 
                     <!-- Website Development -->
                     <div class="service-card glass-effect p-8 rounded-xl reveal" data-reveal-delay="0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-900 text-blue-300 mb-6">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                            <!-- Code Icon -->
                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
                         </div>
@@ -225,7 +227,7 @@
 
                     <!-- Cyber Security -->
                     <div class="service-card glass-effect p-8 rounded-xl reveal" data-reveal-delay="100">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-900 text-blue-300 mb-6">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                            <!-- Shield Icon -->
                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 20.944a11.955 11.955 0 0118 0c.033-.18.05-.363.063-.543a11.97 11.97 0 00-2.445-5.488z"></path></svg>
                         </div>
@@ -235,7 +237,7 @@
 
                     <!-- Pentesting -->
                     <div class="service-card glass-effect p-8 rounded-xl reveal" data-reveal-delay="200">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-900 text-blue-300 mb-6">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                            <!-- Bug/Code Icon -->
                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         </div>
@@ -247,12 +249,12 @@
         </section>
         
         <!-- About Section -->
-        <section id="about" class="py-20 bg-gray-900/20">
+        <section id="about" class="py-20 bg-black/10">
             <div class="container mx-auto px-6">
                 <div class="grid md:grid-cols-2 gap-10 items-center">
                     <div class="reveal">
-                        <!-- TEAM IMAGE: Replace 'src' with the path to your team's photo -->
-                        <img src="https://i.ibb.co.com/DgkWk8bm/Gemini-Generated-Image-59d72u59d72u59d7.png" alt="The Devsecads digital marketing team collaborating" class="rounded-lg shadow-2xl w-full">
+                        <!-- TEAM IMAGE: The placeholder has been replaced with your image. -->
+                        <img src="https://i.ibb.co/DgkWk8bm/Gemini-Generated-Image-59d72u59d72u59d7.png" alt="The Devsecads digital marketing team" class="rounded-lg shadow-2xl w-full">
                     </div>
                     <div class="reveal" data-reveal-delay="100">
                         <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">About Devsecads</h2>
@@ -278,15 +280,15 @@
                     <form action="#" method="POST" class="glass-effect p-8 rounded-xl reveal">
                         <div class="mb-6">
                             <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
-                            <input type="text" id="name" name="name" class="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                            <input type="text" id="name" name="name" class="w-full bg-purple-900/30 border border-purple-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#BDABDA] transition" required>
                         </div>
                         <div class="mb-6">
                             <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
-                            <input type="email" id="email" name="email" class="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                            <input type="email" id="email" name="email" class="w-full bg-purple-900/30 border border-purple-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#BDABDA] transition" required>
                         </div>
                         <div class="mb-6">
                             <label for="service" class="block text-sm font-medium text-gray-300 mb-2">Service of Interest</label>
-                             <select id="service" name="service" class="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                             <select id="service" name="service" class="w-full bg-purple-900/30 border border-purple-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#BDABDA] transition">
                                 <option>Facebook/Instagram Ads</option>
                                 <option>Google Ads</option>
                                 <option>Shopify Store Setup</option>
@@ -302,10 +304,10 @@
                         </div>
                         <div class="mb-6">
                             <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Your Message</label>
-                            <textarea id="message" name="message" rows="4" class="w-full bg-gray-900/50 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required></textarea>
+                            <textarea id="message" name="message" rows="4" class="w-full bg-purple-900/30 border border-purple-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#BDABDA] transition" required></textarea>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg cta-button">Send Message</button>
+                            <button type="submit" class="w-full bg-[#BDABDA] hover:bg-[#a996c4] text-gray-900 font-bold py-3 px-8 rounded-lg text-lg cta-button">Send Message</button>
                         </div>
                     </form>
                 </div>
@@ -314,14 +316,14 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900/40 border-t border-gray-800">
+    <footer class="bg-black/20 border-t border-purple-900/30">
         <div class="container mx-auto px-6 py-8 text-center text-gray-500">
             <p>&copy; 2025 Devsecads. All Rights Reserved.</p>
             <div class="flex justify-center space-x-6 mt-4">
                 <!-- Replace with your actual social links -->
-                <a href="#" class="hover:text-blue-400">Facebook</a>
-                <a href="#" class="hover:text-blue-400">Instagram</a>
-                <a href="#" class="hover:text-blue-400">LinkedIn</a>
+                <a href="#" class="hover:text-[#BDABDA]">Facebook</a>
+                <a href="#" class="hover:text-[#BDABDA]">Instagram</a>
+                <a href="#" class="hover:text-[#BDABDA]">LinkedIn</a>
             </div>
         </div>
     </footer>
@@ -398,5 +400,8 @@
     </script>
 </body>
 </html>
+
+
+
 
 
