@@ -7,6 +7,30 @@
     <!-- SEO Meta Description -->
     <meta name="description" content="Welcome to Devsecads, your expert partner for top-tier digital marketing. We specialize in Facebook & Google Ads, Shopify, Printful, Etsy store setups, and more to scale your business.">
     
+    <!-- Favicon: A modern icon for your site -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><path fill=%22%234299e1%22 d=%22M50 0 L100 25 L100 75 L50 100 L0 75 L0 25 Z%22></path><text x=%2250%22 y=%2260%22 font-size=%2240%22 fill=%22white%22 text-anchor=%22middle%22 font-family=%22Inter, sans-serif%22 font-weight=%22bold%22>DS</text></svg>">
+
+    <!-- Schema.org Structured Data (Helps Google understand your site for Sitelinks & Rich Results) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Devsecads",
+      "url": "https://devsecads.site",
+      "logo": "https://devsecads.site/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "contact@devsecads.site"
+      },
+      "sameAs": [
+        "https://facebook.com/your-profile",
+        "https://instagram.com/your-profile",
+        "https://linkedin.com/your-profile"
+      ]
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/scrollreveal"></script>
@@ -68,7 +92,10 @@
     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div class="container mx-auto px-6 py-4">
             <nav class="flex items-center justify-between">
-                <a href="#" class="text-2xl font-bold text-white">Dev<span class="text-blue-400">secads</span></a>
+                <!-- LOGO: Replace 'src' with the path to your PNG logo file. Recommended size: 150x40 pixels -->
+                <a href="#">
+                    <img src="https://placehold.co/150x40/0a192f/FFFFFF?text=Devsecads&font=inter" alt="Devsecads Logo" class="h-10">
+                </a>
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#home" class="text-gray-300 hover:text-blue-400 transition">Home</a>
                     <a href="#services" class="text-gray-300 hover:text-blue-400 transition">Services</a>
@@ -194,6 +221,7 @@
             <div class="container mx-auto px-6">
                 <div class="grid md:grid-cols-2 gap-10 items-center">
                     <div class="reveal">
+                        <!-- TEAM IMAGE: Replace 'src' with the path to your team's photo -->
                         <img src="https://placehold.co/600x400/0a192f/4299e1?text=Devsecads+Team" alt="The Devsecads digital marketing team collaborating" class="rounded-lg shadow-2xl w-full">
                     </div>
                     <div class="reveal" data-reveal-delay="100">
@@ -337,3 +365,4 @@
     </script>
 </body>
 </html>
+
