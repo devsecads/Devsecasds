@@ -42,51 +42,68 @@
             background-color: #2a2135;
             color: #ccd6f6;
         }
-        /* NEW: Custom cursor styles for desktop */
+        
+        /* --- NEW: Advanced Custom Cursor & Particle System Styles --- */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
         @media (min-width: 1024px) {
+            /* Hide the default system cursor */
             body, a, button {
                 cursor: none;
+                /* INSTRUCTIONS: 
+                   Once you upload your .cur and .ani files to a web host, 
+                   you can use them here like this:
+                   cursor: url('https://your-website.com/cursor.ani'), auto;
+                   cursor: url('https://your-website.com/pointer.cur'), auto;
+                */
             }
         }
-        .custom-cursor {
+
+        /* The main outer ring of the cursor */
+        .cursor-ring {
             position: fixed;
-            width: 24px;
-            height: 24px;
+            width: 30px;
+            height: 30px;
             border: 2px solid #BDABDA;
             border-radius: 50%;
             transform: translate(-50%, -50%);
             pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.15s ease-out;
-            will-change: transform;
+            z-index: 10000;
+            transition: transform 0.2s ease-out, width 0.2s ease-out, height 0.2s ease-out;
         }
-        .star-particle {
+        
+        /* The lagging inner dot of the cursor */
+        .cursor-dot {
             position: fixed;
             width: 8px;
             height: 8px;
             background-color: #BDABDA;
             border-radius: 50%;
+            transform: translate(-50%, -50%);
             pointer-events: none;
-            z-index: 9998;
-            animation: star-rain 1s forwards;
-            --random-x: 0;
-            --random-y: 0;
+            z-index: 10000;
+            transition: transform 0.1s ease-out;
         }
-        @keyframes star-rain {
-            from {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 1;
-            }
-            to {
-                transform: translate(calc(-50% + var(--random-x)), calc(-50% + var(--random-y))) scale(0);
-                opacity: 0;
-            }
+
+        /* Enlarge effect when hovering over links or buttons */
+        body:has(a:hover, button:hover) .cursor-ring {
+            transform: translate(-50%, -50%) scale(1.5);
         }
+        /* --- End of Advanced Cursor Styles --- */
+
         .glass-effect {
             /* Updated glass effect to match the new background */
-            background: rgba(56, 44, 74, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(42, 33, 53, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .cta-button {
@@ -124,7 +141,6 @@
             50% { transform: translateY(-50px) translateX(50px); }
             100% { transform: translateY(0) translateX(0); }
         }
-        /* New animation for the Telegram button */
         @keyframes pulse {
             0% {
                 transform: scale(1);
@@ -143,7 +159,6 @@
             animation: pulse 2.5s infinite;
         }
 
-        /* Styling for the notification bubble */
         .notification-bubble {
             background-color: #BDABDA;
             color: #2a2135;
@@ -166,7 +181,6 @@
             transform: translateX(0);
         }
 
-        /* Triangle pointing to the button */
         .notification-bubble::after {
             content: '';
             position: absolute;
@@ -177,12 +191,26 @@
             border-style: solid;
             border-color: transparent transparent transparent #BDABDA;
         }
+        
+        /* NEW: Mobile Bottom Nav active state styles */
+        .mobile-nav-link svg {
+            transition: all 0.2s ease-in-out;
+            color: #a0aec0; /* A neutral gray color */
+        }
+        .mobile-nav-link.active svg {
+            color: #BDABDA;
+            transform: scale(1.1) translateY(-2px);
+        }
+
     </style>
 </head>
-<body class="antialiased leading-relaxed">
+<body class="antialiased leading-relaxed md:pb-0 pb-20">
 
-    <!-- NEW: Custom cursor element -->
-    <div id="custom-cursor" class="custom-cursor hidden lg:block"></div>
+    <!-- NEW: Canvas for high-performance particle effects -->
+    <canvas id="particle-canvas" class="hidden lg:block"></canvas>
+    <!-- NEW: Upgraded custom cursor elements -->
+    <div id="cursor-ring" class="cursor-ring hidden lg:block"></div>
+    <div id="cursor-dot" class="cursor-dot hidden lg:block"></div>
 
     <!-- Animated Background -->
     <div class="animated-bg" id="animated-bg"></div>
@@ -191,30 +219,19 @@
     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div class="container mx-auto px-6 py-4">
             <nav class="flex items-center justify-between">
-                <!-- LOGO: Replace 'src' with the path to your PNG logo file. Recommended size: 150x40 pixels -->
                 <a href="#">
                     <img src="https://i.ibb.co/XZrQ8WDY/devsecads-logo.png" alt="Devsecads Logo" class="h-16">
                 </a>
+                <!-- Desktop Navigation Links -->
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#home" class="text-gray-300 hover:text-[#BDABDA] transition">Home</a>
                     <a href="#services" class="text-gray-300 hover:text-[#BDABDA] transition">Services</a>
                     <a href="#about" class="text-gray-300 hover:text-[#BDABDA] transition">About</a>
                     <a href="#contact" class="text-gray-300 hover:text-[#BDABDA] transition">Contact</a>
                 </div>
-                <a href="#contact" class="hidden md:block bg-[#BDABDA] hover:bg-[#a996c4] text-gray-900 font-semibold px-5 py-2 rounded-lg cta-button">Get a Quote</a>
-                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
-                    <svg id="menu-open-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                    <svg id="menu-close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
+                <!-- Desktop and Mobile CTA -->
+                <a href="#contact" class="bg-[#BDABDA] hover:bg-[#a996c4] text-gray-900 font-semibold px-5 py-2 rounded-lg cta-button">Get a Quote</a>
             </nav>
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden mt-4 glass-effect rounded-lg p-2">
-                <a href="#home" class="block py-2 px-4 text-sm text-gray-300 hover:bg-purple-900/50 rounded">Home</a>
-                <a href="#services" class="block py-2 px-4 text-sm text-gray-300 hover:bg-purple-900/50 rounded">Services</a>
-                <a href="#about" class="block py-2 px-4 text-sm text-gray-300 hover:bg-purple-900/50 rounded">About</a>
-                <a href="#contact" class="block py-2 px-4 text-sm text-gray-300 hover:bg-purple-900/50 rounded">Contact</a>
-                <a href="#contact" class="block mt-2 bg-[#BDABDA] hover:bg-[#a996c4] text-gray-900 font-semibold text-center px-5 py-2 rounded-lg cta-button">Get a Quote</a>
-            </div>
         </div>
     </header>
 
@@ -222,7 +239,7 @@
         <!-- Hero Section -->
         <section id="home" class="min-h-screen flex items-center pt-24 md:pt-0">
             <div class="container mx-auto px-6 text-center">
-                <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4 animate-fade-in-up">
+                <h1 class="text-5xl md:text-6xl font-extrabold text-white leading-tight mb-4 animate-fade-in-up">
                     Scale Your Business with <br><span class="text-[#BDABDA]">Devsecads Marketing</span>
                 </h1>
                 <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8 animate-fade-in-up" style="animation-delay: 0.3s;">
@@ -238,108 +255,97 @@
         <section id="services" class="py-20">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">Our Comprehensive Devsecads Services</h2>
-                    <p class="text-gray-400 mt-2">Everything you need to succeed online, under one roof.</p>
+                    <h2 class="text-4xl font-bold text-white">Our Services</h2>
+                    <p class="text-gray-400 mt-2">Everything you need to succeed online.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Paid Ads -->
-                    <div class="service-card glass-effect p-8 rounded-xl reveal">
+                    <div class="service-card glass-effect p-6 md:p-8 rounded-xl reveal">
                         <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                             <!-- Meta (Facebook) Icon -->
-                            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M22.08 12.539c0-5.323-4.212-9.65-9.42-9.65-5.212 0-9.423 4.327-9.423 9.65 0 4.77 3.424 8.761 7.913 9.539v-6.73H8.381V12.54h2.769V10.1c0-2.72 1.612-4.222 4.1-4.222 1.18 0 2.451.211 2.451.211v2.32h-1.19c-1.34 0-1.751.82-1.751 1.68v2.051h2.6l-.41 2.809h-2.19V22.08c4.49-.778 7.913-4.769 7.913-9.541z"/>
-                            </svg>
+                            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M22.08 12.539c0-5.323-4.212-9.65-9.42-9.65-5.212 0-9.423 4.327-9.423 9.65 0 4.77 3.424 8.761 7.913 9.539v-6.73H8.381V12.54h2.769V10.1c0-2.72 1.612-4.222 4.1-4.222 1.18 0 2.451.211 2.451.211v2.32h-1.19c-1.34 0-1.751.82-1.751 1.68v2.051h2.6l-.41 2.809h-2.19V22.08c4.49-.778 7.913-4.769 7.913-9.541z"/></svg>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-3">Paid Advertising</h3>
-                        <p class="text-gray-400">Targeted ad campaigns on Facebook, Instagram, and Google to drive traffic, leads, and sales with maximum ROI.</p>
+                        <p class="text-gray-400 text-sm md:text-base">Targeted ad campaigns on Facebook, Instagram, and Google to drive traffic, leads, and sales with maximum ROI.</p>
                     </div>
 
                     <!-- Shopify Setup -->
-                    <div class="service-card glass-effect p-8 rounded-xl reveal" data-reveal-delay="100">
+                    <div class="service-card glass-effect p-6 md:p-8 rounded-xl reveal" data-reveal-delay="100">
                         <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                             <!-- Shopify Icon -->
-                            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.278 14.156c-.228 0-.44.02-.63.05a4.27 4.27 0 0 1-2.91-2.91c.03-.19.05-.4.05-.63 0-1.87-.93-3.52-2.36-4.48a4.91 4.91 0 0 0-3.32-.23c-1.85.52-3.15 2.14-3.33 4.02-.03.26-.03.52-.02.78.18 2.22 1.6 4.1 3.65 4.72.26.08.53.12.8.12.5 0 .98-.12 1.42-.34.25-.13.48-.3.7-.48a4.21 4.21 0 0 1 2.9 2.91c.18.15.35.32.53.51.24.25.53.47.85.65.1.06.2.1.3.15a3.78 3.78 0 0 0 3.32-3.32c0-.26-.03-.52-.08-.77a4.6 4.6 0 0 0-4.39-2.35zM12 4.012c.55 0 1.07.1 1.55.28a3.15 3.15 0 0 1-1.55 6.03 3.15 3.15 0 0 1-1.55-6.03c.48-.18.99-.28 1.55-.28z"/>
-                            </svg>
+                            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.278 14.156c-.228 0-.44.02-.63.05a4.27 4.27 0 0 1-2.91-2.91c.03-.19.05-.4.05-.63 0-1.87-.93-3.52-2.36-4.48a4.91 4.91 0 0 0-3.32-.23c-1.85.52-3.15 2.14-3.33 4.02-.03.26-.03.52-.02.78.18 2.22 1.6 4.1 3.65 4.72.26.08.53.12.8.12.5 0 .98-.12 1.42-.34.25-.13.48-.3.7-.48a4.21 4.21 0 0 1 2.9 2.91c.18.15.35.32.53.51.24.25.53.47.85.65.1.06.2.1.3.15a3.78 3.78 0 0 0 3.32-3.32c0-.26-.03-.52-.08-.77a4.6 4.6 0 0 0-4.39-2.35zM12 4.012c.55 0 1.07.1 1.55.28a3.15 3.15 0 0 1-1.55 6.03 3.15 3.15 0 0 1-1.55-6.03c.48-.18.99-.28 1.55-.28z"/></svg>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-3">Shopify Store Setup</h3>
-                        <p class="text-gray-400">Complete setup of professional, high-converting Shopify stores, from theme customization to app integration.</p>
+                        <p class="text-gray-400 text-sm md:text-base">Complete setup of professional, high-converting Shopify stores, from theme customization to app integration.</p>
                     </div>
 
                     <!-- Drop Shipping / POD -->
-                    <div class="service-card glass-effect p-8 rounded-xl reveal" data-reveal-delay="200">
+                    <div class="service-card glass-effect p-6 md:p-8 rounded-xl reveal" data-reveal-delay="200">
                          <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                             <!-- Printful Icon -->
-                            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M19.5 2h-15C3.12 2 2 3.12 2 4.5v15C2 20.88 3.12 22 4.5 22h15c1.38 0 2.5-1.12 2.5-2.5v-15C22 3.12 20.88 2 19.5 2zM9.91 17.09H6.42V7.41h3.49v9.68zm7.12-4.99c0 2.24-1.39 3.5-3.59 3.5s-3.59-1.26-3.59-3.5V7.41h3.59c2.2 0 3.59 1.25 3.59 3.49v1.2z"/>
-                            </svg>
+                            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M19.5 2h-15C3.12 2 2 3.12 2 4.5v15C2 20.88 3.12 22 4.5 22h15c1.38 0 2.5-1.12 2.5-2.5v-15C22 3.12 20.88 2 19.5 2zM9.91 17.09H6.42V7.41h3.49v9.68zm7.12-4.99c0 2.24-1.39 3.5-3.59 3.5s-3.59-1.26-3.59-3.5V7.41h3.59c2.2 0 3.59 1.25 3.59 3.49v1.2z"/></svg>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-3">Drop Shipping & POD</h3>
-                        <p class="text-gray-400">Expert setup for Print-on-Demand (POD) and Drop Shipping models on platforms like Printify, Printful, and Etsy.</p>
+                        <p class="text-gray-400 text-sm md:text-base">Expert setup for Print-on-Demand (POD) and Drop Shipping models on platforms like Printify, Printful, and Etsy.</p>
                     </div>
 
                     <!-- GearLaunch Setup -->
-                    <div class="service-card glass-effect p-8 rounded-xl reveal" data-reveal-delay="0">
+                    <div class="service-card glass-effect p-6 md:p-8 rounded-xl reveal" data-reveal-delay="0">
                         <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                            <!-- Gear Icon -->
-                           <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="3"></circle>
-                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1.51 1H15a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                            </svg>
+                           <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1.51 1H15a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-3">GearLaunch Stores</h3>
-                        <p class="text-gray-400">Launch your custom merchandise store with GearLaunch. We handle the entire setup process for a turnkey solution.</p>
+                        <p class="text-gray-400 text-sm md:text-base">Launch your custom merchandise store with GearLaunch. We handle the entire setup process for a turnkey solution.</p>
                     </div>
 
                     <!-- Base Platform Setups -->
-                    <div class="service-card glass-effect p-8 rounded-xl reveal" data-reveal-delay="100">
+                    <div class="service-card glass-effect p-6 md:p-8 rounded-xl reveal" data-reveal-delay="100">
                          <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4M4 7l8 4.5M20 7l-8 4.5m0 0V21"></path></svg>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-3">ShopBase, PlusBase, PrintBase</h3>
-                        <p class="text-gray-400">Specialized store setups on the 'Base' family of platforms, optimized for drop shipping and cross-border sales.</p>
+                        <p class="text-gray-400 text-sm md:text-base">Specialized store setups on the 'Base' family of platforms, optimized for drop shipping and cross-border sales.</p>
                     </div>
 
                     <!-- Marketplace Integration -->
-                    <div class="service-card glass-effect p-8 rounded-xl reveal" data-reveal-delay="200">
+                    <div class="service-card glass-effect p-6 md:p-8 rounded-xl reveal" data-reveal-delay="200">
                         <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                            <!-- Etsy Icon -->
-                            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M11.05 6.42h5.71v2.19h-5.71V6.42zm0 4.38h5.71v2.19h-5.71v-2.19zm-5.63 2.6c1.23 0 2.23.99 2.23 2.22s-1 2.22-2.23 2.22-2.23-.99-2.23-2.22.99-2.22 2.23-2.22zm10.74 3.42c.16 0 .3.14.3.3v1.38c0 .16-.14.3-.3.3H4.88c-.16 0-.3-.14-.3-.3V8.6c0-.16.14-.3.3-.3h1.33c.16 0 .3.14.3.3v6.32h9.61v-1.1c0-.16.14-.3.3-.3zm2.73-10.2H4.88c-1.25 0-2.26 1.01-2.26 2.26v10.28c0 1.25 1.01 2.26 2.26 2.26h14.24c1.25 0 2.26-1.01 2.26-2.26V8.88c0-1.25-1.01-2.26-2.26-2.26z"/>
-                            </svg>
+                            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M11.05 6.42h5.71v2.19h-5.71V6.42zm0 4.38h5.71v2.19h-5.71v-2.19zm-5.63 2.6c1.23 0 2.23.99 2.23 2.22s-1 2.22-2.23 2.22-2.23-.99-2.23-2.22.99-2.22 2.23-2.22zm10.74 3.42c.16 0 .3.14.3.3v1.38c0 .16-.14.3-.3.3H4.88c-.16 0-.3-.14-.3-.3V8.6c0-.16.14-.3.3-.3h1.33c.16 0 .3.14.3.3v6.32h9.61v-1.1c0-.16.14-.3.3-.3zm2.73-10.2H4.88c-1.25 0-2.26 1.01-2.26 2.26v10.28c0 1.25 1.01 2.26 2.26 2.26h14.24c1.25 0 2.26-1.01 2.26-2.26V8.88c0-1.25-1.01-2.26-2.26-2.26z"/></svg>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-3">Marketplace Integration</h3>
-                        <p class="text-gray-400">Establish your brand on major marketplaces. We offer full store setup and optimization for Etsy and Teespring.</p>
+                        <p class="text-gray-400 text-sm md:text-base">Establish your brand on major marketplaces. We offer full store setup and optimization for Etsy and Teespring.</p>
                     </div>
 
                     <!-- Website Development -->
-                    <div class="service-card glass-effect p-8 rounded-xl reveal" data-reveal-delay="0">
+                    <div class="service-card glass-effect p-6 md:p-8 rounded-xl reveal" data-reveal-delay="0">
                         <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                            <!-- Code Icon -->
                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-3">Website Development</h3>
-                        <p class="text-gray-400">Custom, responsive, and high-performance websites built from the ground up to meet your unique business needs.</p>
+                        <p class="text-gray-400 text-sm md:text-base">Custom, responsive, and high-performance websites built from the ground up to meet your unique business needs.</p>
                     </div>
 
                     <!-- Cyber Security -->
-                    <div class="service-card glass-effect p-8 rounded-xl reveal" data-reveal-delay="100">
+                    <div class="service-card glass-effect p-6 md:p-8 rounded-xl reveal" data-reveal-delay="100">
                         <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                            <!-- Shield Icon -->
                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 20.944a11.955 11.955 0 0118 0c.033-.18.05-.363.063-.543a11.97 11.97 0 00-2.445-5.488z"></path></svg>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-3">Cyber Security</h3>
-                        <p class="text-gray-400">Comprehensive security solutions to protect your digital assets, from vulnerability assessments to threat mitigation.</p>
+                        <p class="text-gray-400 text-sm md:text-base">Comprehensive security solutions to protect your digital assets, from vulnerability assessments to threat mitigation.</p>
                     </div>
 
                     <!-- Pentesting -->
-                    <div class="service-card glass-effect p-8 rounded-xl reveal" data-reveal-delay="200">
+                    <div class="service-card glass-effect p-6 md:p-8 rounded-xl reveal" data-reveal-delay="200">
                         <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-900/50 text-purple-300 mb-6">
                            <!-- Bug/Code Icon -->
                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-3">Pentesting</h3>
-                        <p class="text-gray-400">Simulate real-world attacks to identify and patch security loopholes before malicious actors can exploit them.</p>
+                        <p class="text-gray-400 text-sm md:text-base">Simulate real-world attacks to identify and patch security loopholes before malicious actors can exploit them.</p>
                     </div>
                 </div>
             </div>
@@ -442,20 +448,30 @@
         </a>
     </div>
 
+    <!-- NEW: Mobile Bottom Navigation -->
+    <nav id="mobile-bottom-nav" class="fixed bottom-0 left-0 right-0 h-16 bg-opacity-70 backdrop-blur-md border-t border-purple-900/30 md:hidden z-50 glass-effect">
+        <div class="flex justify-around items-center h-full max-w-lg mx-auto">
+            <a href="#home" class="mobile-nav-link p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+            </a>
+            <a href="#services" class="mobile-nav-link p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            </a>
+            <a href="#about" class="mobile-nav-link p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+            </a>
+            <a href="#contact" class="mobile-nav-link p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            </a>
+        </div>
+    </nav>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu toggle
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuOpenIcon = document.getElementById('menu-open-icon');
-            const menuCloseIcon = document.getElementById('menu-close-icon');
-
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-                menuOpenIcon.classList.toggle('hidden');
-                menuCloseIcon.classList.toggle('hidden');
-            });
+            // This script block contains the logic for all interactive elements.
+            
+            // --- Mobile Menu Toggle (REMOVED as it's replaced by bottom nav) ---
 
             // Sticky header on scroll
             const header = document.getElementById('header');
@@ -476,7 +492,6 @@
                 reset: false,
                 viewFactor: 0.2
             });
-
             sr.reveal('.reveal', { interval: 100 });
             
             // Custom fade-in-up animation for hero section
@@ -486,7 +501,6 @@
                 el.style.transform = 'translateY(30px)';
                 el.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
             });
-
             setTimeout(() => {
                  fadeUpElements.forEach(el => {
                     el.style.opacity = '1';
@@ -497,122 +511,172 @@
             // Animated background dots
             const bgContainer = document.getElementById('animated-bg');
             const dotCount = 30;
-
             for (let i = 0; i < dotCount; i++) {
                 const dot = document.createElement('div');
                 dot.classList.add('dot');
-                const size = Math.random() * 100 + 20; // 20px to 120px
+                const size = Math.random() * 100 + 20;
                 dot.style.width = `${size}px`;
                 dot.style.height = `${size}px`;
                 dot.style.top = `${Math.random() * 100}%`;
                 dot.style.left = `${Math.random() * 100}%`;
-                const duration = Math.random() * 20 + 10; // 10s to 30s
+                const duration = Math.random() * 20 + 10;
                 dot.style.animationDuration = `${duration}s`;
                 dot.style.animationDelay = `${Math.random() * 5}s`;
                 bgContainer.appendChild(dot);
             }
 
-            // --- REBUILT: Telegram Notification Logic with Fade Animation & Responsive Text ---
+            // Telegram Notification Logic
             const notificationBubble = document.getElementById('telegram-notification');
             const mobileMessages = [
-               "Gearlaunch Store লাগবে ?",
-                "Plusbase Store লাগবে ?",
-                "Shopify Store লাগবে ?",
-                "Facebook Ads <br> ক্যাম্পেইন চালাবেন ?",
-                "Facebook Marketing মার্কেটিং <br> এক্সপার্ট লাগবে?",
-                "T-Shirt Mockup লাগবে <br> Print On Demand <br> এর জন্য ?",
-                "Dropshipping শিখতে চান <br> এবং করতে চান?"
+                "Gearlaunch store লাগবে ?", "Plusbase store লাগবে ?", "Shopify store লাগবে ?",
+                "ফেসবুক এড <br> ক্যাম্পেইন চালাবেন ?", "ফেসবুক মার্কেটিং <br> এক্সপার্ট লাগবে?",
+                "টি শার্ট mockup লাগবে <br> প্রিন্ট অন ডিমান্ড <br> এর জন্য ?", "ড্রপসিপিপিং শিখতে চান <br> এবং করতে চান?"
             ];
-            // Create a desktop-friendly version by removing line breaks
             const desktopMessages = mobileMessages.map(msg => msg.replace(/ <br> /g, ' '));
-            
             let messageIndex = 0;
 
             function cycleMessages() {
-                // Determine which message list to use based on screen width
                 const isMobile = window.innerWidth < 768;
                 const messages = isMobile ? mobileMessages : desktopMessages;
-
-                // 1. Fade out the bubble
                 notificationBubble.classList.remove('show');
-
-                // 2. Wait for the fade-out to finish, then change the text
                 setTimeout(() => {
                     messageIndex = (messageIndex + 1) % messages.length;
-                    notificationBubble.innerHTML = messages[messageIndex]; // Use innerHTML to render <br> tags
-                    
-                    // 3. Fade the bubble back in with the new text
+                    notificationBubble.innerHTML = messages[messageIndex];
                     notificationBubble.classList.add('show');
-                }, 500); // This delay should match the CSS transition duration
+                }, 500);
             }
-
-            // Initially set the first message and show it
             setTimeout(() => {
                 const isMobile = window.innerWidth < 768;
                 const messages = isMobile ? mobileMessages : desktopMessages;
                 notificationBubble.innerHTML = messages[0];
                 notificationBubble.classList.add('show');
-            }, 2000); // Initial delay
-
-            // Set the interval to change the message every 5 seconds
+            }, 2000);
             setInterval(cycleMessages, 5000); 
 
-            // --- UPDATED: Contact Form Mailto Logic ---
+            // Contact Form Mailto Logic
             const contactForm = document.getElementById('contact-form');
             contactForm.addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevent the default form submission
-
-                // --- Your business email address ---
+                event.preventDefault();
                 const recipientEmail = 'info@devsecads.site'; 
-                
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('email').value;
                 const service = document.getElementById('service').value;
                 const message = document.getElementById('message').value;
-
-                // The subject is now the selected service
                 const subject = service;
-
-                const body = `
-New inquiry from: ${name} (${email})
---------------------------------------------------
-
-${message}
-                `;
-
-                // This creates the mailto link and opens the user's email client
+                const body = `\nNew inquiry from: ${name} (${email})\n--------------------------------------------------\n\n${message}\n`;
                 window.location.href = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             });
 
-            // --- NEW: Custom Cursor & Star Rain Effect for Desktop ---
-            const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+            // --- NEW: Mobile Bottom Nav Active Link highlighting ---
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.mobile-nav-link');
 
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 150) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+
+            // --- NEW: Advanced Custom Cursor & Particle Canvas Engine for Desktop ---
+            const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
             if (isDesktop) {
-                const cursor = document.getElementById('custom-cursor');
+                const canvas = document.getElementById('particle-canvas');
+                const ctx = canvas.getContext('2d');
+                const cursorRing = document.getElementById('cursor-ring');
+                const cursorDot = document.getElementById('cursor-dot');
+                
+                let mouseX = -100, mouseY = -100;
+                let dotX = -100, dotY = -100;
+                let particles = [];
+
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                window.addEventListener('resize', () => {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                });
 
                 window.addEventListener('mousemove', e => {
-                    // Move the custom cursor
-                    cursor.style.left = e.clientX + 'px';
-                    cursor.style.top = e.clientY + 'px';
-
-                    // Create a star particle
-                    const star = document.createElement('div');
-                    star.classList.add('star-particle');
-                    document.body.appendChild(star);
-
-                    // Position the star at the cursor's location
-                    star.style.left = e.clientX + 'px';
-                    star.style.top = e.clientY + 'px';
-                    
-                    // Add some random variation to the animation trajectory
-                    star.style.setProperty('--random-x', (Math.random() - 0.5) * 60 + 'px');
-                    star.style.setProperty('--random-y', (Math.random() - 0.5) * 60 + 'px');
-
-                    // Remove the star after the animation ends to keep the page clean
-                    setTimeout(() => {
-                        star.remove();
-                    }, 1000); // This duration should match the CSS animation duration
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
                 });
+                
+                const colors = ["#BDABDA", "#a996c4", "#ccd6f6", "#ffffff"];
+
+                class Particle {
+                    constructor(x, y) {
+                        this.x = x;
+                        this.y = y;
+                        this.size = Math.random() * 3 + 1;
+                        this.speedX = Math.random() * 2 - 1;
+                        this.speedY = Math.random() * 2 - 1;
+                        this.color = colors[Math.floor(Math.random() * colors.length)];
+                        this.life = 1;
+                    }
+
+                    update() {
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        if (this.size > 0.1) this.size -= 0.05;
+                        this.life -= 0.02;
+                    }
+
+                    draw() {
+                        ctx.fillStyle = this.color;
+                        ctx.globalAlpha = this.life;
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                function handleParticles() {
+                    for (let i = 0; i < 2; i++) {
+                        particles.push(new Particle(mouseX, mouseY));
+                    }
+
+                    for (let i = 0; i < particles.length; i++) {
+                        particles[i].update();
+                        particles[i].draw();
+                        if (particles[i].life <= 0 || particles[i].size <= 0.1) {
+                            particles.splice(i, 1);
+                            i--;
+                        }
+                    }
+                }
+
+                function animate() {
+                    // Update cursor positions
+                    cursorRing.style.left = `${mouseX}px`;
+                    cursorRing.style.top = `${mouseY}px`;
+                    
+                    // Lagging dot effect
+                    dotX += (mouseX - dotX) * 0.5;
+                    dotY += (mouseY - dotY) * 0.5;
+                    cursorDot.style.left = `${dotX}px`;
+                    cursorDot.style.top = `${dotY}px`;
+                    
+                    // Update canvas particles
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    handleParticles();
+                    
+                    requestAnimationFrame(animate);
+                }
+                
+                animate();
             }
         });
     </script>
