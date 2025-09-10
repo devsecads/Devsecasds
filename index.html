@@ -83,6 +83,57 @@
             50% { transform: translateY(-50px) translateX(50px); }
             100% { transform: translateY(0) translateX(0); }
         }
+        /* New animation for the Telegram button */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(189, 171, 218, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 15px rgba(189, 171, 218, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(189, 171, 218, 0);
+            }
+        }
+        .telegram-button-animated {
+            animation: pulse 2.5s infinite;
+        }
+
+        /* Styling for the notification bubble */
+        .notification-bubble {
+            background-color: #BDABDA;
+            color: #2a2135;
+            padding: 8px 16px;
+            border-radius: 16px;
+            margin-right: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            position: relative;
+            opacity: 0;
+            transform: translateX(10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .notification-bubble.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Triangle pointing to the button */
+        .notification-bubble::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -8px; 
+            transform: translateY(-50%);
+            border-width: 8px;
+            border-style: solid;
+            border-color: transparent transparent transparent #BDABDA;
+        }
     </style>
 </head>
 <body class="antialiased leading-relaxed">
@@ -328,8 +379,26 @@
         </div>
     </footer>
 
+    <!-- Floating Action Container -->
+    <div class="fixed bottom-6 right-6 z-50 flex items-center group">
+        <!-- Notification Bubble -->
+        <div id="telegram-notification" class="notification-bubble">
+            <!-- Text will be injected by JavaScript -->
+        </div>
+
+        <!-- Telegram Button -->
+        <a href="https://t.me/phoenixdropshipper" target="_blank" rel="noopener noreferrer" class="relative z-10 bg-[#BDABDA] text-gray-900 p-4 rounded-full shadow-lg cta-button hover:scale-110 telegram-button-animated" aria-label="Chat on Telegram">
+            <!-- Telegram Icon SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21.42,2.62a1.86,1.86,0,0,0-1.23-.4a1.88,1.88,0,0,0-1.11.33L3,10.61A1.88,1.88,0,0,0,3,14.28l4.87,1.55,1.55,4.87a1.88,1.88,0,0,0,3.67,0l8.07-15.08A1.88,1.88,0,0,0,21.42,2.62ZM9.47,15.88,7.66,10.7l10-7.25Z"></path>
+            </svg>
+        </a>
+    </div>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // ... (existing code for menu, header, scrollreveal)
             // Mobile menu toggle
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -396,12 +465,38 @@
                 dot.style.animationDelay = `${Math.random() * 5}s`;
                 bgContainer.appendChild(dot);
             }
+
+            // --- NEW: Telegram Notification Logic ---
+            const notificationBubble = document.getElementById('telegram-notification');
+            const messages = [
+                "Gearlaunch store লাগবে ? ক্লিক করুন",
+                "Plusbase store লাগবে ? ক্লিক করুন",
+                "Shopify store লাগবে ? ক্লিক করুন"
+            ];
+            let messageIndex = 0;
+
+            function showNextMessage() {
+                // Fade out the current message
+                notificationBubble.classList.remove('show');
+
+                // After the fade-out transition, change the text and fade it back in
+                setTimeout(() => {
+                    messageIndex = (messageIndex + 1) % messages.length;
+                    notificationBubble.textContent = messages[messageIndex];
+                    notificationBubble.classList.add('show');
+                }, 500); // This should match the CSS transition duration
+            }
+
+            // Initially set the first message and show it
+            notificationBubble.textContent = messages[0];
+            setTimeout(() => {
+                 notificationBubble.classList.add('show');
+            }, 1000); // Delay initial show for a better entry effect
+
+            // Set the interval to change the message every 20 seconds
+            setInterval(showNextMessage, 20000); 
         });
     </script>
 </body>
 </html>
-
-
-
-
 
