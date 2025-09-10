@@ -137,8 +137,6 @@
             border-style: solid;
             border-color: transparent transparent transparent #BDABDA;
         }
-
-        /* REMOVED: Styles for the typing animation cursor are no longer needed */
     </style>
 </head>
 <body class="antialiased leading-relaxed">
@@ -404,7 +402,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // ... (existing code for menu, header, scrollreveal)
             // Mobile menu toggle
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -471,22 +468,6 @@
                 dot.style.animationDelay = `${Math.random() * 5}s`;
                 bgContainer.appendChild(dot);
             }
-
-            // --- UPDATED: Telegram Notification Logic with Typing Animation ---
-            const notificationBubble = document.getElementById('telegram-notification');
-            const messages = [
-                "Gearlaunch store লাগবে ?",
-                "Plusbase store লাগবে ?",
-                "Shopify store লাগবে ?",
-                "ফেসবুক এড <br> ক্যাম্পেইন চালাবেন ?",
-                "ফেসবুক মার্কেটিং <br> এক্সপার্ট লাগবে?",
-                "টি শার্ট mockup লাগবে <br> প্রিন্ট অন ডিমান্ড <br> এর জন্য ?",
-                "ড্রপসিপিপিং শিখতে চান <br> এবং করতে চান?"
-            ];
-            let messageIndex = 0;
-            let isTyping = false;
-
-            <!-- ... (existing code for menu, header, scrollreveal) ... -->
 
             // --- REBUILT: Telegram Notification Logic with Fade Animation & Responsive Text ---
             const notificationBubble = document.getElementById('telegram-notification');
