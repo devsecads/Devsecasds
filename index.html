@@ -8,8 +8,8 @@
     <!-- NEW: More comprehensive and SEO-optimized meta description -->
     <meta name="description" content="Grow your business with Devsecads. We're experts in high-ROI digital marketing, from Facebook Ads and Shopify setups to custom web development. Get your quote today!">
     
-    <!-- FAVICON: IMPORTANT - Upload your new favicon and paste the link below -->
-    <link rel="icon" href="https://your-hosted-image-link-for-favicon.png">
+    <!-- FAVICON: Updated with your logo for consistency -->
+    <link rel="icon" href="https://i.ibb.co/XZrQ8WDY/devsecads-logo.png">
 
     <!-- Schema.org Structured Data (Helps Google understand your site for Sitelinks & Rich Results) -->
     <script type="application/ld+json">
@@ -22,7 +22,7 @@
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer service",
-        "email": "contact@devsecads.site"
+        "email": "info@devsecads.site"
       },
       "sameAs": [
         "https://facebook.com/your-profile",
@@ -502,29 +502,26 @@
             // Set the interval to change the message every 5 seconds
             setInterval(showNextMessage, 5000); 
 
-            // --- NEW: Contact Form Mailto Logic ---
+            // --- UPDATED: Contact Form Mailto Logic ---
             const contactForm = document.getElementById('contact-form');
             contactForm.addEventListener('submit', function(event) {
                 event.preventDefault(); // Prevent the default form submission
 
-                // --- IMPORTANT: Replace with your actual email address ---
-                const recipientEmail = 'contact@devsecads.site'; 
+                // --- Your business email address ---
+                const recipientEmail = 'info@devsecads.site'; 
                 
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('email').value;
                 const service = document.getElementById('service').value;
                 const message = document.getElementById('message').value;
 
-                const subject = `New Inquiry from ${name} via Devsecads Website`;
+                // The subject is now the selected service
+                const subject = service;
 
                 const body = `
-                    You have a new message from your website contact form:
+                    New inquiry from: ${name} (${email})
                     --------------------------------------------------
-                    Name: ${name}
-                    Email: ${email}
-                    Service of Interest: ${service}
-                    --------------------------------------------------
-                    Message:
+
                     ${message}
                 `;
 
@@ -535,6 +532,4 @@
     </script>
 </body>
 </html>
-
-
 
