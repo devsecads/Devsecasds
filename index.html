@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Devsecads - Pro Digital Marketing & E-commerce Services</title>
-    <!-- SEO Meta Description -->
-    <meta name="description" content="Welcome to Devsecads, your expert partner for top-tier digital marketing. We specialize in Facebook & Google Ads, Shopify, Printful, Etsy store setups, and more to scale your business.">
+    <!-- NEW: More iconic and SEO-friendly meta title -->
+    <title>Devsecads | Results-Driven Digital Marketing & E-commerce Solutions</title>
+    <!-- NEW: More comprehensive and SEO-optimized meta description -->
+    <meta name="description" content="Grow your business with Devsecads. We're experts in high-ROI digital marketing, from Facebook Ads and Shopify setups to custom web development. Get your quote today!">
     
-    <!-- Favicon: A modern icon for your site -->
-    <link rel="icon" href="https://i.ibb.co/XZrQ8WDY/devsecads-logo.png">
+    <!-- FAVICON: IMPORTANT - Upload your new favicon and paste the link below -->
+    <link rel="icon" href="https://your-hosted-image-link-for-favicon.png">
 
     <!-- Schema.org Structured Data (Helps Google understand your site for Sitelinks & Rich Results) -->
     <script type="application/ld+json">
@@ -328,7 +329,8 @@
                     <p class="text-gray-400 mt-2">Have a project in mind? Fill out the form and we'll be in touch.</p>
                 </div>
                 <div class="max-w-xl mx-auto">
-                    <form action="#" method="POST" class="glass-effect p-8 rounded-xl reveal">
+                    <!-- Updated form tag for mailto functionality -->
+                    <form id="contact-form" class="glass-effect p-8 rounded-xl reveal">
                         <div class="mb-6">
                             <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
                             <input type="text" id="name" name="name" class="w-full bg-purple-900/30 border border-purple-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#BDABDA] transition" required>
@@ -499,8 +501,39 @@
 
             // Set the interval to change the message every 5 seconds
             setInterval(showNextMessage, 5000); 
+
+            // --- NEW: Contact Form Mailto Logic ---
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                // --- IMPORTANT: Replace with your actual email address ---
+                const recipientEmail = 'contact@devsecads.site'; 
+                
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const service = document.getElementById('service').value;
+                const message = document.getElementById('message').value;
+
+                const subject = `New Inquiry from ${name} via Devsecads Website`;
+
+                const body = `
+                    You have a new message from your website contact form:
+                    --------------------------------------------------
+                    Name: ${name}
+                    Email: ${email}
+                    Service of Interest: ${service}
+                    --------------------------------------------------
+                    Message:
+                    ${message}
+                `;
+
+                // This creates the mailto link and opens the user's email client
+                window.location.href = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            });
         });
     </script>
 </body>
 </html>
+
 
