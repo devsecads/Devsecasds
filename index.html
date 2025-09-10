@@ -110,8 +110,10 @@
             padding: 8px 16px;
             border-radius: 16px;
             margin-right: 12px;
-            font-weight: 500;
-            white-space: nowrap;
+            font-weight: 600;
+            white-space: normal; /* Allow text to wrap */
+            line-height: 1.4;
+            min-width: 160px; /* Give it some space */
             position: relative;
             opacity: 0;
             transform: translateX(10px);
@@ -135,6 +137,8 @@
             border-style: solid;
             border-color: transparent transparent transparent #BDABDA;
         }
+
+        /* REMOVED: Styles for the typing animation cursor are no longer needed */
     </style>
 </head>
 <body class="antialiased leading-relaxed">
@@ -389,7 +393,7 @@
         </div>
 
         <!-- Telegram Button -->
-        <a href="https://t.me/phoenixdropshipper" target="_blank" rel="noopener noreferrer" class="relative z-10 bg-[#BDABDA] text-gray-900 p-4 rounded-full shadow-lg cta-button hover:scale-110 telegram-button-animated" aria-label="Chat on Telegram">
+        <a href="https://t.me/devsecads" target="_blank" rel="noopener noreferrer" class="relative z-10 bg-[#BDABDA] text-gray-900 p-4 rounded-full shadow-lg cta-button hover:scale-110 telegram-button-animated" aria-label="Chat on Telegram">
             <!-- Telegram Icon SVG -->
             <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M21.42,2.62a1.86,1.86,0,0,0-1.23-.4a1.88,1.88,0,0,0-1.11.33L3,10.61A1.88,1.88,0,0,0,3,14.28l4.87,1.55,1.55,4.87a1.88,1.88,0,0,0,3.67,0l8.07-15.08A1.88,1.88,0,0,0,21.42,2.62ZM9.47,15.88,7.66,10.7l10-7.25Z"></path>
@@ -468,39 +472,66 @@
                 bgContainer.appendChild(dot);
             }
 
-            // --- NEW: Telegram Notification Logic ---
+            // --- UPDATED: Telegram Notification Logic with Typing Animation ---
             const notificationBubble = document.getElementById('telegram-notification');
             const messages = [
                 "Gearlaunch store লাগবে ?",
                 "Plusbase store লাগবে ?",
                 "Shopify store লাগবে ?",
-                "ফেসবুক এড ক্যাম্পেইন চালাবেন ?",
-                "ফেসবুক মার্কেটিং এক্সপার্ট লাগবে?",
-                "টি শার্ট mockup লাগবে প্রিন্ট অন ডিমান্ড এর জন্য ?",
-                "ড্রপসিপিপিং শিখতে চান এবং করতে চান?"
+                "ফেসবুক এড <br> ক্যাম্পেইন চালাবেন ?",
+                "ফেসবুক মার্কেটিং <br> এক্সপার্ট লাগবে?",
+                "টি শার্ট mockup লাগবে <br> প্রিন্ট অন ডিমান্ড <br> এর জন্য ?",
+                "ড্রপসিপিপিং শিখতে চান <br> এবং করতে চান?"
             ];
             let messageIndex = 0;
+            let isTyping = false;
 
-            function showNextMessage() {
-                // Fade out the current message
+            <!-- ... (existing code for menu, header, scrollreveal) ... -->
+
+            // --- REBUILT: Telegram Notification Logic with Fade Animation & Responsive Text ---
+            const notificationBubble = document.getElementById('telegram-notification');
+            const mobileMessages = [
+                "Gearlaunch store লাগবে ?",
+                "Plusbase store লাগবে ?",
+                "Shopify store লাগবে ?",
+                "ফেসবুক এড <br> ক্যাম্পেইন চালাবেন ?",
+                "ফেসবুক মার্কেটিং <br> এক্সপার্ট লাগবে?",
+                "টি শার্ট mockup লাগবে <br> প্রিন্ট অন ডিমান্ড <br> এর জন্য ?",
+                "ড্রপসিপিপিং শিখতে চান <br> এবং করতে চান?"
+            ];
+            // Create a desktop-friendly version by removing line breaks
+            const desktopMessages = mobileMessages.map(msg => msg.replace(/ <br> /g, ' '));
+            
+            let messageIndex = 0;
+
+            function cycleMessages() {
+                // Determine which message list to use based on screen width
+                const isMobile = window.innerWidth < 768;
+                const messages = isMobile ? mobileMessages : desktopMessages;
+
+                // 1. Fade out the bubble
                 notificationBubble.classList.remove('show');
 
-                // After the fade-out transition, change the text and fade it back in
+                // 2. Wait for the fade-out to finish, then change the text
                 setTimeout(() => {
                     messageIndex = (messageIndex + 1) % messages.length;
-                    notificationBubble.textContent = messages[messageIndex];
+                    notificationBubble.innerHTML = messages[messageIndex]; // Use innerHTML to render <br> tags
+                    
+                    // 3. Fade the bubble back in with the new text
                     notificationBubble.classList.add('show');
-                }, 500); // This should match the CSS transition duration
+                }, 500); // This delay should match the CSS transition duration
             }
 
             // Initially set the first message and show it
-            notificationBubble.textContent = messages[0];
             setTimeout(() => {
-                 notificationBubble.classList.add('show');
-            }, 1000); // Delay initial show for a better entry effect
+                const isMobile = window.innerWidth < 768;
+                const messages = isMobile ? mobileMessages : desktopMessages;
+                notificationBubble.innerHTML = messages[0];
+                notificationBubble.classList.add('show');
+            }, 2000); // Initial delay
 
             // Set the interval to change the message every 5 seconds
-            setInterval(showNextMessage, 5000); 
+            setInterval(cycleMessages, 5000); 
 
             // --- UPDATED: Contact Form Mailto Logic ---
             const contactForm = document.getElementById('contact-form');
@@ -519,10 +550,10 @@
                 const subject = service;
 
                 const body = `
-                    New inquiry from: ${name} (${email})
-                    --------------------------------------------------
+New inquiry from: ${name} (${email})
+--------------------------------------------------
 
-                    ${message}
+${message}
                 `;
 
                 // This creates the mailto link and opens the user's email client
@@ -532,4 +563,5 @@
     </script>
 </body>
 </html>
+
 
