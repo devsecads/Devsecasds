@@ -42,6 +42,46 @@
             background-color: #2a2135;
             color: #ccd6f6;
         }
+        /* NEW: Custom cursor styles for desktop */
+        @media (min-width: 1024px) {
+            body, a, button {
+                cursor: none;
+            }
+        }
+        .custom-cursor {
+            position: fixed;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #BDABDA;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease-out;
+            will-change: transform;
+        }
+        .star-particle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background-color: #BDABDA;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            animation: star-rain 1s forwards;
+            --random-x: 0;
+            --random-y: 0;
+        }
+        @keyframes star-rain {
+            from {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            to {
+                transform: translate(calc(-50% + var(--random-x)), calc(-50% + var(--random-y))) scale(0);
+                opacity: 0;
+            }
+        }
         .glass-effect {
             /* Updated glass effect to match the new background */
             background: rgba(56, 44, 74, 0.5);
@@ -140,6 +180,9 @@
     </style>
 </head>
 <body class="antialiased leading-relaxed">
+
+    <!-- NEW: Custom cursor element -->
+    <div id="custom-cursor" class="custom-cursor hidden lg:block"></div>
 
     <!-- Animated Background -->
     <div class="animated-bg" id="animated-bg"></div>
@@ -472,13 +515,13 @@
             // --- REBUILT: Telegram Notification Logic with Fade Animation & Responsive Text ---
             const notificationBubble = document.getElementById('telegram-notification');
             const mobileMessages = [
-                "Gearlaunch store লাগবে ?",
-                "Plusbase store লাগবে ?",
-                "Shopify store লাগবে ?",
-                "ফেসবুক এড <br> ক্যাম্পেইন চালাবেন ?",
-                "ফেসবুক মার্কেটিং <br> এক্সপার্ট লাগবে?",
-                "টি শার্ট mockup লাগবে <br> প্রিন্ট অন ডিমান্ড <br> এর জন্য ?",
-                "ড্রপসিপিপিং শিখতে চান <br> এবং করতে চান?"
+               "Gearlaunch Store লাগবে ?",
+                "Plusbase Store লাগবে ?",
+                "Shopify Store লাগবে ?",
+                "Facebook Ads <br> ক্যাম্পেইন চালাবেন ?",
+                "Facebook Marketing মার্কেটিং <br> এক্সপার্ট লাগবে?",
+                "T-Shirt Mockup লাগবে <br> Print On Demand <br> এর জন্য ?",
+                "Dropshipping শিখতে চান <br> এবং করতে চান?"
             ];
             // Create a desktop-friendly version by removing line breaks
             const desktopMessages = mobileMessages.map(msg => msg.replace(/ <br> /g, ' '));
@@ -540,9 +583,39 @@ ${message}
                 // This creates the mailto link and opens the user's email client
                 window.location.href = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             });
+
+            // --- NEW: Custom Cursor & Star Rain Effect for Desktop ---
+            const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+
+            if (isDesktop) {
+                const cursor = document.getElementById('custom-cursor');
+
+                window.addEventListener('mousemove', e => {
+                    // Move the custom cursor
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+
+                    // Create a star particle
+                    const star = document.createElement('div');
+                    star.classList.add('star-particle');
+                    document.body.appendChild(star);
+
+                    // Position the star at the cursor's location
+                    star.style.left = e.clientX + 'px';
+                    star.style.top = e.clientY + 'px';
+                    
+                    // Add some random variation to the animation trajectory
+                    star.style.setProperty('--random-x', (Math.random() - 0.5) * 60 + 'px');
+                    star.style.setProperty('--random-y', (Math.random() - 0.5) * 60 + 'px');
+
+                    // Remove the star after the animation ends to keep the page clean
+                    setTimeout(() => {
+                        star.remove();
+                    }, 1000); // This duration should match the CSS animation duration
+                });
+            }
         });
     </script>
 </body>
 </html>
-
 
